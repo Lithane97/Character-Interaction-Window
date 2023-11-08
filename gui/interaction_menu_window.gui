@@ -74,6 +74,10 @@ window = {
 					expand = {}
 
 					hbox = {
+						# [UniUI] [IMHO]
+						UniUI_IMHO_button = {}
+						# [/IMHO] [/UniUI]
+						
 						button_pin = {
 							name = "button_pin"
 							visible = "[Not(Character.IsPinned)]"
@@ -86,9 +90,21 @@ window = {
 
 						button_barbershop = {
 							name = "customize_portrait"
-							visible = "[Character.CanCustomizePortrait]"
+							visible = "[And(Character.CanCustomizePortrait, Not(GetGlobalVariable('FSB_is_loaded').IsSet))]"
 							onclick = "[Character.OnCustomizePortrait]"
 							onclick = "[CharacterInteractionMenuWindow.Close]"
+							size = { 25 25 }
+
+							tooltip = "CV_CUSTOMIZE_PORTRAIT"
+							using = tooltip_ne
+						}
+
+						button_barbershop = {
+							name = "customize_portrait_FSB"
+							visible = "[And(GetGlobalVariable('FSB_is_loaded').IsSet, Or(Not(GameIsMultiplayer), And( GameIsMultiplayer, Character.CanCustomizePortrait)))]"
+							onclick = "[Character.OnCustomizePortrait]"
+							onclick = "[CharacterInteractionMenuWindow.Close]"
+							enabled = "[Not(GetPlayer.MakeScope.Var('barber_text').IsSet)]"
 							size = { 25 25 }
 
 							tooltip = "CV_CUSTOMIZE_PORTRAIT"
@@ -102,10 +118,10 @@ window = {
 							onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'child', Character.MakeScope ).End  )]"
 							size = { 25 25 }
 
-							tooltip = "RENAME_CHARACTER" 
+							tooltip = "RENAME_CHARACTER"
 							using = tooltip_ne
 						}
-						
+
 						button_go_to_my_location = {
 							name = "button_go_to_my_location"
 							onclick = "[Character.PanCameraTo]"
@@ -130,6 +146,10 @@ window = {
 					text = OUT_OF_DIPLOMACY_RANGE
 				}
 			}
+
+			# [UniUI] [IMHO]
+			UniUI_IMHO_PoV = {}
+			# [/IMHO] [/UniUI]
 
 			scrollbox = {
 				autoresizescrollarea = yes
